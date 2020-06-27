@@ -2,6 +2,9 @@
 
 # Script by Valentin DEVILLE (https://github.com/MyTheValentinus/zabbix-telegram.sh/)
 
+#Para pegar informações sobre o bot: 
+#https://api.telegram.org/bot1326392960:AAFUiRYTRp_8iBu_vMqcvxnHox88LCxMrh8/getupdates
+bot_id="560755829"
 token="1326392960:AAFUiRYTRp_8iBu_vMqcvxnHox88LCxMrh8"
 chat_id="-395670124"
 TEXT="Mensagem enviada"
