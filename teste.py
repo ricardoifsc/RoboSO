@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 import sys
 from time import sleep
 
 class RoboSO:
-    config_file = 'config.ini'
+
+    def __init__(self):
+        config = open('config.ini', 'r')
+        for line in config:
+            self.token = line
     def perguntas(self, cmd):
         if cmd == 'start':
             programa.start()
