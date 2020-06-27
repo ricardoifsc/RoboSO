@@ -4,7 +4,7 @@ import sys
 from time import sleep
 
 class RoboSO:
-
+    config_file = 'config.ini'
     def perguntas(self, cmd):
         if cmd == 'start':
             programa.start()
