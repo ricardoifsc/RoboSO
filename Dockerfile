@@ -1,10 +1,10 @@
 FROM python:3
 
-LABEL maintainer="Ricardo Martins <ricardo.ifsc@gmail.com>"
+LABEL maintainer="Bolivar Lagos and Ricardo Martins <ricardo.ifsc@gmail.com>"
 LABEL version="1.0"
 
-ADD my_script.py /
+ADD programa.py /
 
-RUN pip install pystrich
+RUN pip install httplib2 configparser
 
 CMD [ "python", "./my_script.py" ]
