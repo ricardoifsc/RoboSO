@@ -8,8 +8,9 @@ class RoboSO:
 
     def __init__(self):
         config = open('config.ini', 'r')
-        for line in config:
-            self.token = line
+        self.chat_id = config.readlines()[0]
+        self.token = config.readlines()[1]
+        
     def perguntas(self, cmd):
         if cmd == 'start':
             programa.start()
@@ -29,6 +30,7 @@ class RoboSO:
     def start(self):
         print('Iniciando serviço...')
         sleep(1)
+        print(self.chat_id)
         return
 
     def stop(self):
@@ -42,6 +44,9 @@ class RoboSO:
         print('Serviço reiniciado.')
         sleep(1)
         return
+
+    def mensagem(self):
+        False
 
 programa = RoboSO()
 if __name__ == "__main__":
