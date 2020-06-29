@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import sys
+import sys,requests,pycurl,configparser
 from time import sleep
 
 class RoboSO:
 
     def __init__(self):
-        config = open('config.ini', 'r')
-        self.chat_id = config.readlines()[0]
-        self.token = config.readlines()[1]
+        config = configparser.ConfigParser()
+        config.read('config.ini')
+        self.chat_id = config['config']['chat_id']
+        self.token = config['config']['token']
         
     def perguntas(self, cmd):
         if cmd == 'start':
@@ -29,8 +30,8 @@ class RoboSO:
 
     def start(self):
         print('Iniciando serviço...')
-        sleep(1)
         print(self.chat_id)
+        programa.sendMsg()
         return
 
     def stop(self):
@@ -46,7 +47,16 @@ class RoboSO:
         return
 
     def mensagem(self):
-        False
+        json = { "chat_id": "-395670124", "text": "Teste", "parse_mode": "html", "disable_web_page_preview": True }
+        return json
+
+    def sendMsg(self):
+        url = 'https://api.telegram.org/bot' + self.token + '/sendMessage'
+        headers = {'Content-type': 'application/json'}
+        texto = programa.mensagem()
+        response = requests.post(url, data=texto, headers=headers)
+        print(response)
+        return
 
 programa = RoboSO()
 if __name__ == "__main__":

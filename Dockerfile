@@ -5,6 +5,8 @@ LABEL version="1.0"
 
 ADD teste.py /
 
-RUN pip install httplib2 configparser chatterbot setuptools wheel chatterbot-corpus
+COPY config.ini /
+
+RUN pip install pycurl requests configparser
 
 CMD [ "python", "./teste.py" ]
