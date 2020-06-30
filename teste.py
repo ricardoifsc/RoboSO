@@ -11,7 +11,7 @@ class RoboSO:
     def __init__(self):
         config = open('config.ini', 'r')
         self.chat_id = config.readlines()[0]
-        config.close()
+        # config.close()
         config = open('config.ini', 'r')
         self.token = config.readlines()[1]
         config.close()
@@ -58,9 +58,12 @@ class RoboSO:
     def enviar_mensagem(self):
         texto = programa.mensagem()
         print(texto)
+        print()
+        print(self.chat_id)
+        print(self.token)
         
-        bot = telegram.Bot(token=self.token.replace("\n",""))
-        bot.sendMessage(chat_id=self.chat_id.replace("\n",""), text=texto)
+        # bot = telegram.Bot(token=self.token.replace("\n",""))
+        # bot.sendMessage(chat_id=self.chat_id.replace("\n",""), text=texto)
         return 
 
 programa = RoboSO()
