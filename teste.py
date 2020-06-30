@@ -2,14 +2,19 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import telegram
 from time import sleep
+
 
 class RoboSO:
 
     def __init__(self):
         config = open('config.ini', 'r')
         self.chat_id = config.readlines()[0]
+        config.close()
+        config = open('config.ini', 'r')
         self.token = config.readlines()[1]
+        config.close()
         
     def perguntas(self, cmd):
         if cmd == 'start':
@@ -31,6 +36,7 @@ class RoboSO:
         print('Iniciando serviço...')
         sleep(1)
         print(self.chat_id)
+        programa.enviar_mensagem()
         return
 
     def stop(self):
@@ -46,7 +52,16 @@ class RoboSO:
         return
 
     def mensagem(self):
-        False
+        json = { "chat_id": self.chat_id.replace("\n",""), "text": "Teste", "parse_mode": "html", "disable_web_page_preview": True }
+        return json
+
+    def enviar_mensagem(self):
+        texto = programa.mensagem()
+        print(texto)
+        
+        bot = telegram.Bot(token=self.token.replace("\n",""))
+        bot.sendMessage(chat_id=self.chat_id.replace("\n",""), text=texto)
+        return 
 
 programa = RoboSO()
 if __name__ == "__main__":
