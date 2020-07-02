@@ -9,12 +9,13 @@ from time import sleep
 class RoboSO:
 
     def __init__(self):
-        config = open('config.ini', 'r')
-        self.chat_id = config.readlines()[0]
-        config.close()
-        config = open('config.ini', 'r')
-        self.token = config.readlines()[1]
-        config.close()
+        
+        with open('config.ini') as f:
+
+            lines = f.readlines()
+            self.chat_id = lines[0]
+            self.token = lines[1]          
+            
         
     def perguntas(self, cmd):
         if cmd == 'start':
@@ -69,3 +70,4 @@ if __name__ == "__main__":
             programa.perguntas(saida)
     except:
         sys.exit(1)
+        
