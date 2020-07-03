@@ -1,22 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import sys
-import telegram
+import sys,telegram,configparser
 from time import sleep
 
 
 class RoboSO:
 
     def __init__(self):
-        
-        with open('config.ini') as f:
+        config = configparser.ConfigParser()
+        config.read('config.ini')
+        self.chat_id = config['config']['chat_id']
+        self.token = config['config']['token']        
 
-            lines = f.readlines()
-            self.chat_id = lines[0]
-            self.token = lines[1]          
-            
-        
     def perguntas(self, cmd):
         if cmd == 'start':
             programa.start()
