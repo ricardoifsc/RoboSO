@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import sys,telegram,configparser
+import sys,configparser,json,requests
+# import telegram
 from time import sleep
-
 
 class RoboSO:
 
     def __init__(self):
         config = configparser.ConfigParser()
         config.read('config.ini')
+        self.url = config['config']['url']
         self.chat_id = config['config']['chat_id']
         self.token = config['config']['token']        
 
@@ -32,8 +33,8 @@ class RoboSO:
     def start(self):
         print('Iniciando serviço...')
         sleep(1)
-        print(self.chat_id)
-        programa.enviar_mensagem()
+        linkToSend = self.url + self.token + "/sendMessage"
+        programa.enviar_mensagem(linkToSend,self.chat_id)
         return
 
     def stop(self):
@@ -48,14 +49,16 @@ class RoboSO:
         sleep(1)
         return
 
+    #Função para criar a mensagem
     def mensagem(self):
-        json = { "chat_id": self.chat_id.replace("\n",""), "text": "Teste", "parse_mode": "html", "disable_web_page_preview": True }
-        return json
+        text = "Aqui se monta um texto\n teste" + "\n" + "Criar a função para montá-la"
+        return text
 
-    def enviar_mensagem(self):
+    #Função para enviar a mensagem
+    def enviar_mensagem(self,url,chat):
         texto = programa.mensagem()
-        bot = telegram.Bot(token=self.token.replace("\n",""))
-        bot.sendMessage(chat_id=self.chat_id.replace("\n",""), text=texto)
+        json = {'chat_id': chat, 'text': texto}
+        requests.post(url, data=json)
         return 
 
 programa = RoboSO()
