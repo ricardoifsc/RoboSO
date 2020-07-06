@@ -7,6 +7,6 @@ ADD teste.py /
 
 COPY config.ini /
 
-RUN pip install pycurl requests configparser
+RUN pip install requests configparser
 
 CMD [ "python", "./teste.py" ]
