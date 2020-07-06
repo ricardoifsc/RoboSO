@@ -12,7 +12,8 @@ class RoboSO:
         config.read('config.ini')
         self.url = config['config']['url']
         self.chat_id = config['config']['chat_id']
-        self.token = config['config']['token']        
+        token = config['config']['token']        
+        self.link = self.url + token
 
     def perguntas(self, cmd):
         if cmd == 'start':
@@ -33,8 +34,7 @@ class RoboSO:
     def start(self):
         print('Iniciando serviço...')
         sleep(1)
-        linkToSend = self.url + self.token + "/sendMessage"
-        programa.enviar_mensagem(linkToSend,self.chat_id)
+        programa.enviar_mensagem()
         return
 
     def stop(self):
@@ -49,21 +49,17 @@ class RoboSO:
         sleep(1)
         return
 
-    #Função para criar a mensagem
-    def mensagem(self):
-        text = "Aqui se monta um texto\n teste" + "\n" + "Criar a função para montá-la"
-        return text
-
     #Função para enviar a mensagem
-    def enviar_mensagem(self,url,chat):
-        texto = programa.mensagem()
-        json = {'chat_id': chat, 'text': texto}
+    def enviar_mensagem(self):
+        url =  self.link + "/sendMessage"
+        texto = "Aqui se monta um texto\n teste" + "\n" + "Criar a função para montá-la"
+        json = {'chat_id': self.chat_id, 'text': texto}
         requests.post(url, data=json)
         return 
 
     #Função para separar mensagem, usuário e id da mensagem
     def getMensagem(self):
-        linkToGet = self.url + self.token + "/getUpdates"
+        linkToGet = self.link + "/getUpdates"
         response = requests.get(linkToGet)
         content = response.content.decode("utf8")
         convertJson = json.loads(content)
