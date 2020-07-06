@@ -61,12 +61,35 @@ class RoboSO:
         requests.post(url, data=json)
         return 
 
+    #Função para separar mensagem, usuário e id da mensagem
+    def getMensagem(self):
+        linkToGet = self.url + self.token + "/getUpdates"
+        response = requests.get(linkToGet)
+        content = response.content.decode("utf8")
+        convertJson = json.loads(content)
+        totalMensagens = len(convertJson["result"])
+        ultimaMensagem = totalMensagens -1
+        idMensagem = convertJson["result"][ultimaMensagem]["message"]["message_id"]
+        mensagem = convertJson["result"][ultimaMensagem]["message"]["text"]
+        autor = convertJson["result"][ultimaMensagem]["message"]["chat"]["first_name"]
+        return (mensagem, autor, str(idMensagem))
+
+
+###################### INICIO DO PROGRAMA ######################
 programa = RoboSO()
+idmsn_old = "0"
 if __name__ == "__main__":
     try:
         while True:
-            saida = input('Digite alguma coisa: ')
-            programa.perguntas(saida)
+            msn, autor, idmsn = programa.getMensagem()
+            if not msn: continue
+            if idmsn_old == idmsn: continue
+            else:
+                idmsn_old = idmsn
+                if msn[0] == "/":
+                    print("O usuário " + autor + " vai executar: " + msn[1:])
+                    programa.perguntas(msn[1:])
+                else:
+                    print("O usuário " + autor + " digitou: " + msn)
     except:
         sys.exit(1)
-        
