@@ -24,7 +24,7 @@ def run():
     print('Iniciando...')
     server_addr = ('127.0.0.1', 8081)
     httpd = HTTPServer(server_addr, RequisicaoHTTP)
-    print('rodando...')
+    print('rodando...')    
     httpd.serve_forever()
  
  

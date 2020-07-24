@@ -3,10 +3,12 @@
 
 import sys,configparser,json,requests#,select,traceback,socket,_thread
 from time import sleep
+import HTTPhandler
 
 class RoboSO:
     def __init__(self):
-        self.get_config()
+        self.http_server_init()
+        # self.get_config()
 
     def get_config(self):
         config = configparser.ConfigParser()
@@ -18,6 +20,14 @@ class RoboSO:
         token = config['config']['token']
         self.rede = (host, int(porta))
         self.link = self.url + token
+        return self.rede
+        
+    def http_server_init(self):
+        self.get_config()            
+        print('Iniciando...')
+        requisicaohttp = HTTPhandler.RequisicaoHTTP
+        httpd = HTTPServer(self.rede,requisicaohttp)
+        httpd.serve_forever()
 
     def get_rede(self):
         return self.rede
