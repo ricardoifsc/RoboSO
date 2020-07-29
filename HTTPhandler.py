@@ -4,28 +4,31 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
  
 class RequisicaoHTTP(BaseHTTPRequestHandler):
-    def do_GET(self):
+    def do_LER(self):
         self.send_response(200)
         self.send_header('Content-type','text/html')
         self.end_headers()
-        message = "Teste \n meu teste"
+        message = "Ler alguma coisa"
         self.wfile.write(bytes(message, "utf8"))
-        return
+        response = "get"
+        return response
 
-    def do_POST(self):
+    def do_FAZ(self):
         self.send_response(200)
         self.end_headers()
-        response = BytesIO()
-        response.write(b'This is POST request. \n')
-        self.wfile.write(response.getvalue())
-        return
- 
-def run():
+        message = ('Fazer alguma coisa \n')
+        self.wfile.write(bytes(message, "utf8"))
+        response = "post"
+        return response
+
+# host = 'localhost' 
+# port = 8081
+def run(ip, porta):
     print('Iniciando...')
-    server_addr = ('127.0.0.1', 8081)
+    server_addr = (ip, porta)
     httpd = HTTPServer(server_addr, RequisicaoHTTP)
-    print('rodando...')    
+    print('rodando...')
     httpd.serve_forever()
  
- 
-run()
+
+run(host, port)
